@@ -5,7 +5,7 @@ class Room:
         self.capacity = capacity
         self.songs = []
         self.checked_in_guests = []
-        self.total_cash = 0
+        self.total_cash = 100.00
         self.entry_fee = 5
 
     def add_song(self, song):
@@ -30,12 +30,16 @@ class Room:
 
     def increase_total_cash(self, amount):
         self.total_cash += amount
-        return self.total_cash
 
     def room_has_capacity(self, room):
         return room.capacity > len(room.checked_in_guests)
 
+    def room_has_favourite_song(self, guest):
+        for song in self.songs:
+            if song.title == guest.favourite_song:
+                return "Woho!"
+        return ":'("
   
 
 
-        
+    

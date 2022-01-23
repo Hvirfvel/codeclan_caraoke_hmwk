@@ -6,9 +6,9 @@ from src.guest import Guest
 class TestRoom(unittest.TestCase):
     def setUp(self):
         self.room = Room("Unicorn", 2)
-        self.guest_1 = Guest("Gördis", 50)
-        self.guest_2 = Guest("Hugo", 40)
-        self.guest_3 = Guest("Karl", 3)
+        self.guest_1 = Guest("Gördis", 50, "Hello")
+        self.guest_2 = Guest("Hugo", 40, "Say My Name")
+        self.guest_3 = Guest("Karl", 3, "Dani California")
         self.entry_fee = 5
 
     def test_room_has_name(self):
@@ -29,7 +29,8 @@ class TestRoom(unittest.TestCase):
         self.assertEqual(0, len(self.room.checked_in_guests))
 
     def test_can_increase_total_cash(self):
-        self.assertEqual(5, self.room.increase_total_cash(self.entry_fee))
+        self.room.increase_total_cash(self.entry_fee)
+        self.assertEqual(105, self.room.total_cash)
 
     def test_room_has_capacity__returns_true(self):
         self.assertEqual(True, self.room.room_has_capacity(self.room))
@@ -59,4 +60,11 @@ class TestRoom(unittest.TestCase):
     def test_can_check_in__guest_can_pay__returns_false(self):
         self.assertEqual(False, self.room.can_check_in(self.room, self.entry_fee, self.guest_3))
 
+    def test_room_has_favourite_song__returns_true(self):
+        song = Song("Hello", "Adele")
+        self.room.add_song(song)
+        self.assertEqual("Woho!", self.room.room_has_favourite_song(self.guest_1))
+
+    def test_room_has_favourite_song_returns_false(self):
+        self.assertEqual(":'(", self.room.room_has_favourite_song(self.guest_1))
     
